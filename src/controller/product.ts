@@ -19,12 +19,14 @@ export const createProduct = async (request: Request, response: Response) => {
       description,
     });
     response.send(product);
-  } catch (error) {
-    console.log('error in createProduct', error);
-    response.send({
-      message: 'Something went wrong while creating product',
-    });
-    throw error;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.log('error in createProduct', error);
+      response.send({
+        message: 'Something went wrong while creating product',
+      });
+      throw error;
+    }
   }
 };
 
