@@ -36,7 +36,23 @@ export const getProducts = async (request: Request, response: Response) => {
     if (error instanceof Error) {
       console.log('error in getProducts', error);
       response.send({
-        message: 'Something went wrong while getting products',
+        message: 'Something went wrong while fetching products',
+      });
+      throw error;
+    }
+  }
+};
+
+export const getProductById = async (request: Request, response: Response) => {
+  try {
+    const { id } = request.params;
+    const product = await Product.findById(id);
+    response.send(product);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.log('error in getProducts', error);
+      response.send({
+        message: 'Something went wrong while fetching product',
       });
       throw error;
     }
